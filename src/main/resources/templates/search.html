@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/js/search.js}"></script>
+</head>
+<tbody>
+
+<div>
+    <a class="waves-effect waves-light btn" th:href="@{/random}">Random</a>
+    <a class="waves-effect waves-light btn" th:href="@{/search}">Search</a>
+    <a class="waves-effect waves-light btn" th:href="@{/saved}">Saved <span id="savedItems" class="badge" ></span></a>
+    <a class="waves-effect waves-light btn" th:href="@{/logout}">Logout</a>
+</div>
+
+
+<div>
+    <form th:action="@{/search}" method="post" id="search">
+        <input name="beerName" type="text" th:value="*{beerName}" placeholder="Search by name"/>
+        <p><input type="submit" class="waves-effect waves-light btn" th:value="Search" /></p>
+    </form>
+</div>
+
+<div th:if="${biers != null}">
+    <table class="striped">
+        <tr>
+            <th>Name</th>
+            <th>Tagline</th>
+            <th>ABV</th>
+            <th></th>
+        </tr>
+        <tr th:each="bier: ${biers}">
+            <td th:text="${bier.name}" />
+            <td th:text="${bier.tagline}" />
+            <td th:text="${bier.abv}" />
+            <td>
+                <form th:action="@{/update}" th:object="${bier}" method="post" class="save">
+                    <input type="hidden" name="id" th:value="${bier.id}" />
+                    <input type="hidden" name="name" th:value="${bier.name}" />
+                    <input type="hidden" name="tagline" th:value="*{tagline}" />
+                    <input type="hidden" name="abv" th:value="*{abv}" />
+                    <p><input type="submit" class="saveButton waves-effect waves-light btn" th:value="Save" /></p>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+</tbody>
+
+</html>

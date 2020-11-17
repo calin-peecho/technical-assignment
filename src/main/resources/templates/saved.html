@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Saved</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<tbody>
+
+<div>
+    <a class="waves-effect waves-light btn" th:href="@{/random}">Random</a>
+    <a class="waves-effect waves-light btn" th:href="@{/search}">Search</a>
+    <a class="waves-effect waves-light btn" th:href="@{/saved}">Saved <span id="savedItems" class="badge" ></span></a>
+    <a class="waves-effect waves-light btn" th:href="@{/logout}">Logout</a>
+</div>
+
+<div>
+    <table class="striped">
+        <tr>
+            <th>Name</th>
+            <th>Tagline</th>
+            <th>ABV</th>
+            <th></th>
+        </tr>
+        <tr th:each="b: ${bierList}">
+            <td th:text="${b.name}" />
+            <td th:text="${b.tagline}" />
+            <td th:text="${b.abv}" />
+            <td>
+                <form method="POST" th:action="@{/remove_item}">
+                    <input type="hidden" name="id" id="id" th:value="${b.id}" />
+                    <button type="submit" name="submit" value="value" class="link-button">Remove</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</tbody>
+
+</html>
